@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:id="@+id/layoutCollapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 1 " android:textSize="20dp" android:textStyle="bold"
+                android:background="@drawable/shape"
+                android:textColor="#FFFFFF"
+                android:id="@+id/step"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/close_btn"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/ic_clear_black_24dp"
+                tools:ignore="ContentDescription"/>
+        </RelativeLayout>
+
+
+        <!-- this is the expanded layout -->
+        <LinearLayout
+            android:id="@+id/layoutExpanded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#a0c3d7"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 1 " android:textSize="50dp" android:textStyle="bold"
+                android:background="@drawable/shape"
+                android:textColor="#FFFFFF"
+                android:id="@+id/stepExpanded"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:id="@+id/buttonSimplifiedCoding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:text="Some text"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="another text"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
+
+
+
+            <!--<RelativeLayout-->
+            <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--    xmlns:tools="http://schemas.android.com/tools"-->
+            <!--    android:layout_width="65dp"-->
+            <!--    android:id="@+id/chat_head_root"-->
+            <!--    android:layout_height="wrap_content"-->
+            <!--    android:orientation="vertical"-->
+            <!--    android:layout_marginStart="300dp"-->
+            <!--    android:layout_marginTop="600dp">-->
+
+
+            <!--    &lt;!&ndash;Profile image for the chat head.&ndash;&gt;-->
+            <!--    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+            <!--        android:text=" 1 " android:textSize="50dp" android:textStyle="bold"-->
+            <!--        android:background="@drawable/shape"-->
+            <!--        android:textColor="#FFFFFF"-->
+            <!--        android:id="@+id/logo"-->
+            <!--        android:layout_marginTop="8dp"/>-->
+
+            <!--&lt;!&ndash;    <ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;        android:id="@+id/app_logo"&ndash;&gt;-->
+            <!--&lt;!&ndash;        android:layout_width="60dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;        android:layout_height="60dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;        android:layout_marginTop="8dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;        android:src="@drawable/ic_info_black_24dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;        tools:ignore="ContentDescription"/>&ndash;&gt;-->
+
+            <!--    &lt;!&ndash;Close button&ndash;&gt;-->
+            <!--    <ImageView-->
+            <!--        android:id="@+id/close_btn"-->
+            <!--        android:layout_width="26dp"-->
+            <!--        android:layout_height="26dp"-->
+            <!--        android:layout_marginStart="40dp"-->
+            <!--        android:src="@drawable/ic_clear_black_24dp"-->
+            <!--        tools:ignore="ContentDescription"/>-->
+            <!--</RelativeLayout>-->

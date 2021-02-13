@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="65dp"
+    android:id="@+id/chat_head_root"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginStart="300dp"
+    android:layout_marginTop="600dp"
+    tools:ignore="MissingDefaultResource">
+
+
+    <!--Profile image for the chat head.-->
+    <!--    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+    <!--        android:text=" 1 " android:textSize="50dp" android:textStyle="bold"-->
+    <!--        android:background="@drawable/shape"-->
+    <!--        android:textColor="#FFFFFF"-->
+    <!--        android:id="@+id/logo"-->
+    <!--        android:layout_marginTop="8dp"/>-->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/app_info"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_info_black_24dp"
+            tools:ignore="ContentDescription"/>
+
+        <!--Close button-->
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="40dp"
+            android:src="@drawable/ic_clear_black_24dp"
+            tools:ignore="ContentDescription"/>
+    </RelativeLayout>
+</RelativeLayout>
