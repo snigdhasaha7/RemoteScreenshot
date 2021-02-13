@@ -21,11 +21,13 @@ import android.media.ToneGenerator;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,6 +51,8 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 
 
@@ -342,8 +346,6 @@ public class ScreenshotService extends Service implements View.OnClickListener{
         mWindowManager.updateViewLayout(stepView, stepIconParams);
     }
 
-
-
     public class ImageTransmogrifier implements ImageReader.OnImageAvailableListener {
         private final int width;
         private final int height;
@@ -398,8 +400,8 @@ public class ScreenshotService extends Service implements View.OnClickListener{
                     latestBitmap=Bitmap.createBitmap(bitmapWidth,
                             height, Bitmap.Config.ARGB_8888);
 
-                    processText();
 
+                    saveBitmap(latestBitmap);
                 }
 
                 latestBitmap.copyPixelsFromBuffer(buffer);
@@ -417,65 +419,32 @@ public class ScreenshotService extends Service implements View.OnClickListener{
             }
         }
 
-        private void processText() {
+        public void saveBitmap(Bitmap latestBitmap) {
+            Log.i("TEST", "width: " + latestBitmap.getWidth());
+            String filename = "pippo.png";
 
-            final TextView textStep = stepView.findViewById(R.id.step);
-            final TextView textExpandedStep = stepView.findViewById(R.id.stepExpanded);
-            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(latestBitmap);
-            FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
-                    .getOnDeviceTextRecognizer();
+            File pictureFileDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Your Folder Name");
+            if (!pictureFileDir.exists()) {
+                boolean isDirectoryCreated = pictureFileDir.mkdirs();
+                if (!isDirectoryCreated)
+                    Log.i("TAG", "Can't create directory to save the image");
+            }
 
-            Task<FirebaseVisionText> result =
-                    detector.processImage(firebaseVisionImage)
-                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                                @Override
-                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                                    String resultText = firebaseVisionText.getText();
+            File sd = pictureFileDir;
+            File dest = new File(sd, filename);
 
-                                    for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
-                                        String blockText = block.getText();
-                                        Rect blockFrame = block.getBoundingBox();
-
-                                        for (FirebaseVisionText.Line line : block.getLines()) {
-                                            String lineText = line.getText();
-//                                        Float lineConfidence = line.getConfidence();
-//                                        List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
-                                            Point[] lineCornerPoints = line.getCornerPoints();
-                                            Rect lineFrame = line.getBoundingBox();
-                                            System.out.println(lineText + " - pos:(" + lineFrame.right + "," +lineFrame.top + ")");
-                                            if (lineText.equalsIgnoreCase("my posts")) {
-                                                updateIconPosition(Math.round(lineFrame.right), Math.round(lineFrame.top));
-                                                textStep.setText("my posts");
-                                                textExpandedStep.setText("my posts");
-                                            }
-                                            else if (lineText.equalsIgnoreCase("wechat out")) {
-                                                updateIconPosition(Math.round(lineFrame.right), Math.round(lineFrame.top));
-                                                textStep.setText("wechat out");
-                                                textExpandedStep.setText("wechat out");
-                                            }
-                                            else if (lineText.equalsIgnoreCase("new friends")) {
-                                                updateIconPosition(Math.round(lineFrame.right), Math.round(lineFrame.top));
-                                                textStep.setText("new friends");
-                                                textExpandedStep.setText("new friends");
-                                            }
-                                            for (FirebaseVisionText.Element element : line.getElements()) {
-                                                String elementText = element.getText();
-                                                Rect elementFrame = element.getBoundingBox();
-//                                                    System.out.println(elementText+" - pos:("+elementFrame.centerX()+","+elementFrame.centerY()+")");
-                                            }
-                                        }
-                                    }
-                                }
-                            })
-                            .addOnFailureListener(
-                                    new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Task failed with an exception
-                                            // ...
-                                        }
-                                    });
+            try {
+                FileOutputStream out = new FileOutputStream(dest);
+                latestBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+                out.close();
+                Log.i("TEST", "File: " + dest.getAbsolutePath());
+                Log.i("TEST", "File size: " + dest.length());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
 
         Surface getSurface() {
             return(imageReader.getSurface());
